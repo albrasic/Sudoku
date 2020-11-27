@@ -1,0 +1,2176 @@
+<html>	
+    <head>
+        <title>Flask-SocketIO-Game: {{ room }}</title>
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+        <script type="text/javascript" charset="utf-8">
+            var socket;
+            var score = 0;
+            var id = -1;
+            var ids = "-1";
+            $(document).ready(function(){
+                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+                a11 = {value: 0, state: 0};
+                a12 = {value: 0, state: 0};
+                a13 = {value: 0, state: 0};
+                a14 = {value: 0, state: 0};
+                a15 = {value: 0, state: 0};
+                a16 = {value: 0, state: 0};
+                a17 = {value: 0, state: 0};
+                a18 = {value: 0, state: 0};
+                a19 = {value: 0, state: 0};
+
+                a21 = {value: 0, state: 0};
+                a22 = {value: 0, state: 0};
+                a23 = {value: 0, state: 0};
+                a24 = {value: 0, state: 0};
+                a25 = {value: 0, state: 0};
+                a26 = {value: 0, state: 0};
+                a27 = {value: 0, state: 0};
+                a28 = {value: 0, state: 0};
+                a29 = {value: 0, state: 0};
+
+                a31 = {value: 0, state: 0};
+                a32 = {value: 0, state: 0};
+                a33 = {value: 0, state: 0};
+                a34 = {value: 0, state: 0};
+                a35 = {value: 0, state: 0};
+                a36 = {value: 0, state: 0};
+                a37 = {value: 0, state: 0};
+                a38 = {value: 0, state: 0};
+                a39 = {value: 0, state: 0};
+
+                a41 = {value: 0, state: 0};
+                a42 = {value: 0, state: 0};
+                a43 = {value: 0, state: 0};
+                a44 = {value: 0, state: 0};
+                a45 = {value: 0, state: 0};
+                a46 = {value: 0, state: 0};
+                a47 = {value: 0, state: 0};
+                a48 = {value: 0, state: 0};
+                a49 = {value: 0, state: 0};
+
+                a51 = {value: 0, state: 0};
+                a52 = {value: 0, state: 0};
+                a53 = {value: 0, state: 0};
+                a54 = {value: 0, state: 0};
+                a55 = {value: 0, state: 0};
+                a56 = {value: 0, state: 0};
+                a57 = {value: 0, state: 0};
+                a58 = {value: 0, state: 0};
+                a59 = {value: 0, state: 0};
+
+                a61 = {value: 0, state: 0};
+                a62 = {value: 0, state: 0};
+                a63 = {value: 0, state: 0};
+                a64 = {value: 0, state: 0};
+                a65 = {value: 0, state: 0};
+                a66 = {value: 0, state: 0};
+                a67 = {value: 0, state: 0};
+                a68 = {value: 0, state: 0};
+                a69 = {value: 0, state: 0};
+
+                a71 = {value: 0, state: 0};
+                a72 = {value: 0, state: 0};
+                a73 = {value: 0, state: 0};
+                a74 = {value: 0, state: 0};
+                a75 = {value: 0, state: 0};
+                a76 = {value: 0, state: 0};
+                a77 = {value: 0, state: 0};
+                a78 = {value: 0, state: 0};
+                a79 = {value: 0, state: 0};
+
+                a81 = {value: 0, state: 0};
+                a82 = {value: 0, state: 0};
+                a83 = {value: 0, state: 0};
+                a84 = {value: 0, state: 0};
+                a85 = {value: 0, state: 0};
+                a86 = {value: 0, state: 0};
+                a87 = {value: 0, state: 0};
+                a88 = {value: 0, state: 0};
+                a89 = {value: 0, state: 0};
+
+                a91 = {value: 0, state: 0};
+                a92 = {value: 0, state: 0};
+                a93 = {value: 0, state: 0};
+                a94 = {value: 0, state: 0};
+                a95 = {value: 0, state: 0};
+                a96 = {value: 0, state: 0};
+                a97 = {value: 0, state: 0};
+                a98 = {value: 0, state: 0};
+                a99 = {value: 0, state: 0};
+
+
+                $(window).bind('beforeunload', function() {
+	            refresh();
+	        });
+
+                socket.on('connect', function() {
+                    socket.emit('joined', {});
+                });
+                
+                socket.on('status', function(message) {
+                   if (id == -1) { 
+	               id = message.id;
+                       ids = id.toString();
+                       $('#yourId').text(ids);
+                       
+		   }
+                   $('#Messages').append(message.msg);
+                });
+ 
+                socket.on('answer', function(data) {
+                    storeValues(data);
+		    console.log(a11);
+                });
+
+		socket.on('question', function(data) {
+                    storeStates(data);
+		    
+                    show();
+		    console.log(a77);
+                });
+
+                $('#a11_ans').keyup(function() {
+                    if (a11.value == $('#a11_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a11'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a12_ans').keyup(function() {
+                    if (a12.value == $('#a12_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a12'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a13_ans').keyup(function() {
+                    if (a13.value == $('#a13_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a13'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a14_ans').keyup(function() {
+                    if (a14.value == $('#a14_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a14'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a15_ans').keyup(function() {
+                    if (a15.value == $('#a15_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a15'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a16_ans').keyup(function() {
+                    if (a16.value == $('#a16_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a16'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a17_ans').keyup(function() {
+                    if (a17.value == $('#a17_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a17'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a18_ans').keyup(function() {
+                    if (a18.value == $('#a18_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a18'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a19_ans').keyup(function() {
+                    if (a19.value == $('#a19_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a19'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a21_ans').keyup(function() {
+                    if (a21.value == $('#a21_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a21'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a22_ans').keyup(function() {
+                    if (a22.value == $('#a22_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a22'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a23_ans').keyup(function() {
+                    if (a23.value == $('#a23_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a23'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a24_ans').keyup(function() {
+                    if (a24.value == $('#a24_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a24'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a25_ans').keyup(function() {
+                    if (a25.value == $('#a25_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a25'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a26_ans').keyup(function() {
+                    if (a26.value == $('#a26_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a26'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a27_ans').keyup(function() {
+                    if (a27.value == $('#a27_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a27'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a28_ans').keyup(function() {
+                    if (a28.value == $('#a28_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a28'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a29_ans').keyup(function() {
+                    if (a29.value == $('#a29_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a29'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a31_ans').keyup(function() {
+                    if (a31.value == $('#a31_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a31'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a32_ans').keyup(function() {
+                    if (a32.value == $('#a32_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a32'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a33_ans').keyup(function() {
+                    if (a33.value == $('#a33_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a33'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a34_ans').keyup(function() {
+                    if (a34.value == $('#a34_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a34'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a35_ans').keyup(function() {
+                    if (a35.value == $('#a35_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a35'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a36_ans').keyup(function() {
+                    if (a36.value == $('#a36_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a36'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a37_ans').keyup(function() {
+                    if (a37.value == $('#a37_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a37'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a38_ans').keyup(function() {
+                    if (a38.value == $('#a38_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a38'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a39_ans').keyup(function() {
+                    if (a39.value == $('#a39_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a39'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a41_ans').keyup(function() {
+                    if (a41.value == $('#a41_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a41'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a42_ans').keyup(function() {
+                    if (a42.value == $('#a42_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a42'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a43_ans').keyup(function() {
+                    if (a43.value == $('#a43_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a43'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a44_ans').keyup(function() {
+                    if (a44.value == $('#a44_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a44'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a45_ans').keyup(function() {
+                    if (a45.value == $('#a45_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a45'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a46_ans').keyup(function() {
+                    if (a46.value == $('#a46_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a46'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a47_ans').keyup(function() {
+                    if (a47.value == $('#a47_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a4: 'a47'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a48_ans').keyup(function() {
+                    if (a48.value == $('#a48_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a48'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a49_ans').keyup(function() {
+                    if (a49.value == $('#a49_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a49'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a51_ans').keyup(function() {
+                    if (a51.value == $('#a51_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a51'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a52_ans').keyup(function() {
+                    if (a52.value == $('#a52_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a52'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a53_ans').keyup(function() {
+                    if (a53.value == $('#a53_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a53'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a54_ans').keyup(function() {
+                    if (a54.value == $('#a54_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a54'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a55_ans').keyup(function() {
+                    if (a55.value == $('#a55_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a55'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a56_ans').keyup(function() {
+                    if (a56.value == $('#a56_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a56'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a57_ans').keyup(function() {
+                    if (a57.value == $('#a57_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a57'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a58_ans').keyup(function() {
+                    if (a58.value == $('#a58_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a58'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a59_ans').keyup(function() {
+                    if (a59.value == $('#a59_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a59'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a61_ans').keyup(function() {
+                    if (a61.value == $('#a61_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a61'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a62_ans').keyup(function() {
+                    if (a62.value == $('#a62_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a62'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a63_ans').keyup(function() {
+                    if (a63.value == $('#a63_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a63'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a64_ans').keyup(function() {
+                    if (a64.value == $('#a64_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a64'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a65_ans').keyup(function() {
+                    if (a65.value == $('#a65_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a65'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a66_ans').keyup(function() {
+                    if (a66.value == $('#a66_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a66'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a67_ans').keyup(function() {
+                    if (a67.value == $('#a67_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a67'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a68_ans').keyup(function() {
+                    if (a68.value == $('#a68_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a68'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a69_ans').keyup(function() {
+                    if (a69.value == $('#a69_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a69'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a71_ans').keyup(function() {
+                    if (a71.value == $('#a71_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a71'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a72_ans').keyup(function() {
+                    if (a72.value == $('#a72_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a72'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a73_ans').keyup(function() {
+                    if (a73.value == $('#a73_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a73'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a74_ans').keyup(function() {
+                    if (a74.value == $('#a74_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a74'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a75_ans').keyup(function() {
+                    if (a75.value == $('#a75_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a75'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a76_ans').keyup(function() {
+                    if (a76.value == $('#a76_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a76'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a77_ans').keyup(function() {
+                    if (a77.value == $('#a77_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a77'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a78_ans').keyup(function() {
+                    if (a78.value == $('#a78_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a78'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a79_ans').keyup(function() {
+                    if (a79.value == $('#a79_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a79'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a81_ans').keyup(function() {
+                    if (a81.value == $('#a81_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a81'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a82_ans').keyup(function() {
+                    if (a82.value == $('#a82_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a82'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a83_ans').keyup(function() {
+                    if (a83.value == $('#a83_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a83'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a84_ans').keyup(function() {
+                    if (a84.value == $('#a84_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a84'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a85_ans').keyup(function() {
+                    if (a85.value == $('#a85_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a85'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a86_ans').keyup(function() {
+                    if (a86.value == $('#a86_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a86'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a87_ans').keyup(function() {
+                    if (a87.value == $('#a87_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a87'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a88_ans').keyup(function() {
+                    if (a88.value == $('#a88_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a88'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a89_ans').keyup(function() {
+                    if (a89.value == $('#a89_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a89'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a91_ans').keyup(function() {
+                    if (a91.value == $('#a91_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a91'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+                $('#a92_ans').keyup(function() {
+                    if (a92.value == $('#a92_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a92'});
+			clearDis();
+		    } else {
+			$(this).prop('disabled'. true);
+		    }
+                });
+
+                $('#a93_ans').keyup(function() {
+                    if (a93.value == $('#a93_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a93'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+		$('#a94_ans').keyup(function() {
+                    if (a94.value == $('#a94_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a94'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });             
+
+		$('#a95_ans').keyup(function() {
+                    if (a95.value == $('#a95_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a95'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a96_ans').keyup(function() {
+                    if (a96.value == $('#a96_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a96'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });       
+
+		$('#a97_ans').keyup(function() {
+                    if (a97.value == $('#a97_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a97'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });  
+
+		$('#a98_ans').keyup(function() {
+                    if (a98.value == $('#a98_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a98'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });     
+
+		$('#a99_ans').keyup(function() {
+                    if (a99.value == $('#a99_ans').val()) {
+			score += 1;
+			scores = score.toString();
+                        $('#yourScore').text(scores);
+			socket.emit('text', {a0: id, a1: 'a99'});
+			clearDis();
+		    } else {
+			$(this).attr('disabled', 'disabled');
+		    }
+                });
+
+            });
+
+
+	    function storeValues(data) {
+		data = JSON.parse(data);
+		console.log(data);
+		a11.value = data.a11;
+		a12.value = data.a12;
+		a13.value = data.a13;
+		a14.value = data.a14;
+		a15.value = data.a15;
+		a16.value = data.a16;
+		a17.value = data.a17;
+		a18.value = data.a18;
+		a19.value = data.a19;
+
+		a21.value = data.a21;
+		a22.value = data.a22;
+		a23.value = data.a23;
+		a24.value = data.a24;
+		a25.value = data.a25;
+		a26.value = data.a26;
+		a27.value = data.a27;
+		a28.value = data.a28;
+		a29.value = data.a29;
+
+		a31.value = data.a31;
+		a32.value = data.a32;
+		a33.value = data.a33;
+		a34.value = data.a34;
+		a35.value = data.a35;
+		a36.value = data.a36;
+		a37.value = data.a37;
+		a38.value = data.a38;
+		a39.value = data.a39;
+
+		a41.value = data.a41;
+		a42.value = data.a42;
+		a43.value = data.a43;
+		a44.value = data.a44;
+		a45.value = data.a45;
+		a46.value = data.a46;
+		a47.value = data.a47;
+		a48.value = data.a48;
+		a49.value = data.a49;
+
+		a51.value = data.a51;
+		a52.value = data.a52;
+		a53.value = data.a53;
+		a54.value = data.a54;
+		a55.value = data.a55;
+		a56.value = data.a56;
+		a57.value = data.a57;
+		a58.value = data.a58;
+		a59.value = data.a59;
+
+		a61.value = data.a61;
+		a62.value = data.a62;
+		a63.value = data.a63;
+		a64.value = data.a64;
+		a65.value = data.a65;
+		a66.value = data.a66;
+		a67.value = data.a67;
+		a68.value = data.a68;
+		a69.value = data.a69;
+
+		a71.value = data.a71;
+		a72.value = data.a72;
+		a73.value = data.a73;
+		a74.value = data.a74;
+		a75.value = data.a75;
+		a76.value = data.a76;
+		a77.value = data.a77;
+		a78.value = data.a78;
+		a79.value = data.a79;
+
+		a81.value = data.a81;
+		a82.value = data.a82;
+		a83.value = data.a83;
+		a84.value = data.a84;
+		a85.value = data.a85;
+		a86.value = data.a86;
+		a87.value = data.a87;
+		a88.value = data.a88;
+		a89.value = data.a89;
+
+		a91.value = data.a91;
+		a92.value = data.a92;
+		a93.value = data.a93;
+		a94.value = data.a94;
+		a95.value = data.a95;
+		a96.value = data.a96;
+		a97.value = data.a97;
+		a98.value = data.a98;
+		a99.value = data.a99;
+	    }
+
+	    function storeStates(data) {
+		data = JSON.parse(data);
+		a11.state = data.a11;
+		a12.state = data.a12;
+		a13.state = data.a13;
+		a14.state = data.a14;
+		a15.state = data.a15;
+		a16.state = data.a16;
+		a17.state = data.a17;
+		a18.state = data.a18;
+		a19.state = data.a19;
+
+		a21.state = data.a21;
+		a22.state = data.a22;
+		a23.state = data.a23;
+		a24.state = data.a24;
+		a25.state = data.a25;
+		a26.state = data.a26;
+		a27.state = data.a27;
+		a28.state = data.a28;
+		a29.state = data.a29;
+
+		a31.state = data.a31;
+		a32.state = data.a32;
+		a33.state = data.a33;
+		a34.state = data.a34;
+		a35.state = data.a35;
+		a36.state = data.a36;
+		a37.state = data.a37;
+		a38.state = data.a38;
+		a39.state = data.a39;
+
+		a41.state = data.a41;
+		a42.state = data.a42;
+		a43.state = data.a43;
+		a44.state = data.a44;
+		a45.state = data.a45;
+		a46.state = data.a46;
+		a47.state = data.a47;
+		a48.state = data.a48;
+		a49.state = data.a49;
+
+		a51.state = data.a51;
+		a52.state = data.a52;
+		a53.state = data.a53;
+		a54.state = data.a54;
+		a55.state = data.a55;
+		a56.state = data.a56;
+		a57.state = data.a57;
+		a58.state = data.a58;
+		a59.state = data.a59;
+
+		a61.state = data.a61;
+		a62.state = data.a62;
+		a63.state = data.a63;
+		a64.state = data.a64;
+		a65.state = data.a65;
+		a66.state = data.a66;
+		a67.state = data.a67;
+		a68.state = data.a68;
+		a69.state = data.a69;
+
+		a71.state = data.a71;
+		a72.state = data.a72;
+		a73.state = data.a73;
+		a74.state = data.a74;
+		a75.state = data.a75;
+		a76.state = data.a76;
+		a77.state = data.a77;
+		a78.state = data.a78;
+		a79.state = data.a79;
+
+		a81.state = data.a81;
+		a82.state = data.a82;
+		a83.state = data.a83;
+		a84.state = data.a84;
+		a85.state = data.a85;
+		a86.state = data.a86;
+		a87.state = data.a87;
+		a88.state = data.a88;
+		a89.state = data.a89;
+
+		a91.state = data.a91;
+		a92.state = data.a92;
+		a93.state = data.a93;
+		a94.state = data.a94;
+		a95.state = data.a95;
+		a96.state = data.a96;
+		a97.state = data.a97;
+		a98.state = data.a98;
+		a99.state = data.a99;
+	    }
+
+	    function show() {	
+		if (a11.state == 1) {
+		    $('#a11_sol').text(a11.value);
+		    $('#a11_sol').show();
+		    $('#a11_ans').hide();
+		} else {
+		    $('#a11_sol').hide();
+		    $('#a11_ans').show();
+		}
+
+		if (a12.state == 1) {
+		    $('#a12_sol').text(a12.value);
+		    $('#a12_sol').show();
+		    $('#a12_ans').hide();
+		} else {
+		    $('#a12_sol').hide();
+		    $('#a12_ans').show();
+		}
+
+		if (a13.state == 1) {
+		    $('#a13_sol').text(a13.value);
+		    $('#a13_sol').show();
+		    $('#a13_ans').hide();
+		} else {
+		    $('#a13_sol').hide();
+		    $('#a13_ans').show();
+		}
+
+		if (a14.state == 1) {
+		    $('#a14_sol').text(a14.value);
+		    $('#a14_sol').show();
+		    $('#a14_ans').hide();
+		} else {
+		    $('#a14_sol').hide();
+		    $('#a14_ans').show();
+		}	
+
+		if (a15.state == 1) {
+		    $('#a15_sol').text(a15.value);
+		    $('#a15_sol').show();
+		    $('#a15_ans').hide();
+		} else {
+		    $('#a15_sol').hide();
+		    $('#a15_ans').show();
+		}	
+
+		if (a16.state == 1) {
+		    $('#a16_sol').text(a16.value);
+		    $('#a16_sol').show();
+		    $('#a16_ans').hide();
+		} else {
+		    $('#a16_sol').hide();
+		    $('#a16_ans').show();
+		}
+
+		if (a17.state == 1) {
+		    $('#a17_sol').text(a17.value);
+		    $('#a17_sol').show();
+		    $('#a17_ans').hide();
+		} else {
+		    $('#a17_sol').hide();
+		    $('#a17_ans').show();
+		}
+
+		if (a18.state == 1) {
+		    $('#a18_sol').text(a18.value);
+		    $('#a18_sol').show();
+		    $('#a18_ans').hide();
+		} else {
+		    $('#a18_sol').hide();
+		    $('#a18_ans').show();
+		}
+
+		if (a19.state == 1) {
+		    $('#a19_sol').text(a19.value);
+		    $('#a19_sol').show();
+		    $('#a19_ans').hide();
+		} else {
+		    $('#a19_sol').hide();
+		    $('#a19_ans').show();
+		}
+
+		if (a21.state == 1) {
+		    $('#a21_sol').text(a21.value);
+		    $('#a21_sol').show();
+		    $('#a21_ans').hide();
+		} else {
+		    $('#a21_sol').hide();
+		    $('#a21_ans').show();
+		}
+
+		if (a22.state == 1) {
+		    $('#a22_sol').text(a22.value);
+		    $('#a22_sol').show();
+		    $('#a22_ans').hide();
+		} else {
+		    $('#a22_sol').hide();
+		    $('#a22_ans').show();
+		}
+
+		if (a23.state == 1) {
+		    $('#a23_sol').text(a23.value);
+		    $('#a23_sol').show();
+		    $('#a23_ans').hide();
+		} else {
+		    $('#a23_sol').hide();
+		    $('#a23_ans').show();
+		}
+
+		if (a24.state == 1) {
+		    $('#a24_sol').text(a24.value);
+		    $('#a24_sol').show();
+		    $('#a24_ans').hide();
+		} else {
+		    $('#a24_sol').hide();
+		    $('#a24_ans').show();
+		}	
+
+		if (a25.state == 1) {
+		    $('#a25_sol').text(a25.value);
+		    $('#a25_sol').show();
+		    $('#a25_ans').hide();
+		} else {
+		    $('#a25_sol').hide();
+		    $('#a25_ans').show();
+		}	
+
+		if (a26.state == 1) {
+		    $('#a26_sol').text(a26.value);
+		    $('#a26_sol').show();
+		    $('#a26_ans').hide();
+		} else {
+		    $('#a26_sol').hide();
+		    $('#a26_ans').show();
+		}
+
+		if (a27.state == 1) {
+		    $('#a27_sol').text(a27.value);
+		    $('#a27_sol').show();
+		    $('#a27_ans').hide();
+		} else {
+		    $('#a27_sol').hide();
+		    $('#a27_ans').show();
+		}
+
+		if (a28.state == 1) {
+		    $('#a28_sol').text(a28.value);
+		    $('#a28_sol').show();
+		    $('#a28_ans').hide();
+		} else {
+		    $('#a28_sol').hide();
+		    $('#a28_ans').show();
+		}
+
+		if (a29.state == 1) {
+		    $('#a29_sol').text(a29.value);
+		    $('#a29_sol').show();
+		    $('#a29_ans').hide();
+		} else {
+		    $('#a29_sol').hide();
+		    $('#a29_ans').show();
+		}
+
+		if (a31.state == 1) {
+		    $('#a31_sol').text(a31.value);
+		    $('#a31_sol').show();
+		    $('#a31_ans').hide();
+		} else {
+		    $('#a31_sol').hide();
+		    $('#a31_ans').show();
+		}
+
+		if (a32.state == 1) {
+		    $('#a32_sol').text(a32.value);
+		    $('#a32_sol').show();
+		    $('#a32_ans').hide();
+		} else {
+		    $('#a32_sol').hide();
+		    $('#a32_ans').show();
+		}
+
+		if (a33.state == 1) {
+		    $('#a33_sol').text(a33.value);
+		    $('#a33_sol').show();
+		    $('#a33_ans').hide();
+		} else {
+		    $('#a33_sol').hide();
+		    $('#a33_ans').show();
+		}
+
+		if (a34.state == 1) {
+		    $('#a34_sol').text(a34.value);
+		    $('#a34_sol').show();
+		    $('#a34_ans').hide();
+		} else {
+		    $('#a34_sol').hide();
+		    $('#a34_ans').show();
+		}	
+
+		if (a35.state == 1) {
+		    $('#a35_sol').text(a35.value);
+		    $('#a35_sol').show();
+		    $('#a35_ans').hide();
+		} else {
+		    $('#a35_sol').hide();
+		    $('#a35_ans').show();
+		}	
+
+		if (a36.state == 1) {
+		    $('#a36_sol').text(a36.value);
+		    $('#a36_sol').show();
+		    $('#a36_ans').hide();
+		} else {
+		    $('#a36_sol').hide();
+		    $('#a36_ans').show();
+		}
+
+		if (a37.state == 1) {
+		    $('#a37_sol').text(a37.value);
+		    $('#a37_sol').show();
+		    $('#a37_ans').hide();
+		} else {
+		    $('#a37_sol').hide();
+		    $('#a37_ans').show();
+		}
+
+		if (a38.state == 1) {
+		    $('#a38_sol').text(a38.value);
+		    $('#a38_sol').show();
+		    $('#a38_ans').hide();
+		} else {
+		    $('#a38_sol').hide();
+		    $('#a38_ans').show();
+		}
+
+		if (a39.state == 1) {
+		    $('#a39_sol').text(a39.value);
+		    $('#a39_sol').show();
+		    $('#a39_ans').hide();
+		} else {
+		    $('#a39_sol').hide();
+		    $('#a39_ans').show();
+		}
+
+		if (a41.state == 1) {
+		    $('#a41_sol').text(a41.value);
+		    $('#a41_sol').show();
+		    $('#a41_ans').hide();
+		} else {
+		    $('#a41_sol').hide();
+		    $('#a41_ans').show();
+		}
+
+		if (a42.state == 1) {
+		    $('#a42_sol').text(a42.value);
+		    $('#a42_sol').show();
+		    $('#a42_ans').hide();
+		} else {
+		    $('#a42_sol').hide();
+		    $('#a42_ans').show();
+		}
+
+		if (a43.state == 1) {
+		    $('#a43_sol').text(a43.value);
+		    $('#a43_sol').show();
+		    $('#a43_ans').hide();
+		} else {
+		    $('#a43_sol').hide();
+		    $('#a43_ans').show();
+		}
+
+		if (a44.state == 1) {
+		    $('#a44_sol').text(a44.value);
+		    $('#a44_sol').show();
+		    $('#a44_ans').hide();
+		} else {
+		    $('#a44_sol').hide();
+		    $('#a44_ans').show();
+		}	
+
+		if (a45.state == 1) {
+		    $('#a45_sol').text(a45.value);
+		    $('#a45_sol').show();
+		    $('#a45_ans').hide();
+		} else {
+		    $('#a45_sol').hide();
+		    $('#a45_ans').show();
+		}	
+
+		if (a46.state == 1) {
+		    $('#a46_sol').text(a46.value);
+		    $('#a46_sol').show();
+		    $('#a46_ans').hide();
+		} else {
+		    $('#a46_sol').hide();
+		    $('#a46_ans').show();
+		}
+
+		if (a47.state == 1) {
+		    $('#a47_sol').text(a47.value);
+		    $('#a47_sol').show();
+		    $('#a47_ans').hide();
+		} else {
+		    $('#a47_sol').hide();
+		    $('#a47_ans').show();
+		}
+
+		if (a48.state == 1) {
+		    $('#a48_sol').text(a48.value);
+		    $('#a48_sol').show();
+		    $('#a48_ans').hide();
+		} else {
+		    $('#a48_sol').hide();
+		    $('#a48_ans').show();
+		}
+
+		if (a49.state == 1) {
+		    $('#a49_sol').text(a49.value);
+		    $('#a49_sol').show();
+		    $('#a49_ans').hide();
+		} else {
+		    $('#a49_sol').hide();
+		    $('#a49_ans').show();
+		}
+
+		if (a51.state == 1) {
+		    $('#a51_sol').text(a51.value);
+		    $('#a51_sol').show();
+		    $('#a51_ans').hide();
+		} else {
+		    $('#a51_sol').hide();
+		    $('#a51_ans').show();
+		}
+
+		if (a52.state == 1) {
+		    $('#a52_sol').text(a52.value);
+		    $('#a52_sol').show();
+		    $('#a52_ans').hide();
+		} else {
+		    $('#a52_sol').hide();
+		    $('#a52_ans').show();
+		}
+
+		if (a53.state == 1) {
+		    $('#a53_sol').text(a53.value);
+		    $('#a53_sol').show();
+		    $('#a53_ans').hide();
+		} else {
+		    $('#a53_sol').hide();
+		    $('#a53_ans').show();
+		}
+
+		if (a54.state == 1) {
+		    $('#a54_sol').text(a54.value);
+		    $('#a54_sol').show();
+		    $('#a54_ans').hide();
+		} else {
+		    $('#a54_sol').hide();
+		    $('#a54_ans').show();
+		}	
+
+		if (a55.state == 1) {
+		    $('#a55_sol').text(a55.value);
+		    $('#a55_sol').show();
+		    $('#a55_ans').hide();
+		} else {
+		    $('#a55_sol').hide();
+		    $('#a55_ans').show();
+		}	
+
+		if (a56.state == 1) {
+		    $('#a56_sol').text(a56.value);
+		    $('#a56_sol').show();
+		    $('#a56_ans').hide();
+		} else {
+		    $('#a56_sol').hide();
+		    $('#a56_ans').show();
+		}
+
+		if (a57.state == 1) {
+		    $('#a57_sol').text(a57.value);
+		    $('#a57_sol').show();
+		    $('#a57_ans').hide();
+		} else {
+		    $('#a57_sol').hide();
+		    $('#a57_ans').show();
+		}
+
+		if (a58.state == 1) {
+		    $('#a58_sol').text(a58.value);
+		    $('#a58_sol').show();
+		    $('#a58_ans').hide();
+		} else {
+		    $('#a58_sol').hide();
+		    $('#a58_ans').show();
+		}
+
+		if (a59.state == 1) {
+		    $('#a59_sol').text(a59.value);
+		    $('#a59_sol').show();
+		    $('#a59_ans').hide();
+		} else {
+		    $('#a59_sol').hide();
+		    $('#a59_ans').show();
+		}
+
+		if (a61.state == 1) {
+		    $('#a61_sol').text(a61.value);
+		    $('#a61_sol').show();
+		    $('#a61_ans').hide();
+		} else {
+		    $('#a61_sol').hide();
+		    $('#a61_ans').show();
+		}
+
+		if (a62.state == 1) {
+		    $('#a62_sol').text(a62.value);
+		    $('#a62_sol').show();
+		    $('#a62_ans').hide();
+		} else {
+		    $('#a62_sol').hide();
+		    $('#a62_ans').show();
+		}
+
+		if (a63.state == 1) {
+		    $('#a63_sol').text(a63.value);
+		    $('#a63_sol').show();
+		    $('#a63_ans').hide();
+		} else {
+		    $('#a63_sol').hide();
+		    $('#a63_ans').show();
+		}
+
+		if (a64.state == 1) {
+		    $('#a64_sol').text(a64.value);
+		    $('#a64_sol').show();
+		    $('#a64_ans').hide();
+		} else {
+		    $('#a64_sol').hide();
+		    $('#a64_ans').show();
+		}	
+
+		if (a65.state == 1) {
+		    $('#a65_sol').text(a65.value);
+		    $('#a65_sol').show();
+		    $('#a65_ans').hide();
+		} else {
+		    $('#a65_sol').hide();
+		    $('#a65_ans').show();
+		}	
+
+		if (a66.state == 1) {
+		    $('#a66_sol').text(a66.value);
+		    $('#a66_sol').show();
+		    $('#a66_ans').hide();
+		} else {
+		    $('#a66_sol').hide();
+		    $('#a66_ans').show();
+		}
+
+		if (a67.state == 1) {
+		    $('#a67_sol').text(a67.value);
+		    $('#a67_sol').show();
+		    $('#a67_ans').hide();
+		} else {
+		    $('#a67_sol').hide();
+		    $('#a67_ans').show();
+		}
+
+		if (a68.state == 1) {
+		    $('#a68_sol').text(a68.value);
+		    $('#a68_sol').show();
+		    $('#a68_ans').hide();
+		} else {
+		    $('#a68_sol').hide();
+		    $('#a68_ans').show();
+		}
+
+		if (a69.state == 1) {
+		    $('#a69_sol').text(a69.value);
+		    $('#a69_sol').show();
+		    $('#a69_ans').hide();
+		} else {
+		    $('#a69_sol').hide();
+		    $('#a69_ans').show();
+		}
+
+		if (a71.state == 1) {
+		    $('#a71_sol').text(a71.value);
+		    $('#a71_sol').show();
+		    $('#a71_ans').hide();
+		} else {
+		    $('#a71_sol').hide();
+		    $('#a71_ans').show();
+		}
+
+		if (a72.state == 1) {
+		    $('#a72_sol').text(a72.value);
+		    $('#a72_sol').show();
+		    $('#a72_ans').hide();
+		} else {
+		    $('#a72_sol').hide();
+		    $('#a72_ans').show();
+		}
+
+		if (a73.state == 1) {
+		    $('#a73_sol').text(a73.value);
+		    $('#a73_sol').show();
+		    $('#a73_ans').hide();
+		} else {
+		    $('#a73_sol').hide();
+		    $('#a73_ans').show();
+		}
+
+		if (a74.state == 1) {
+		    $('#a74_sol').text(a74.value);
+		    $('#a74_sol').show();
+		    $('#a74_ans').hide();
+		} else {
+		    $('#a74_sol').hide();
+		    $('#a74_ans').show();
+		}	
+
+		if (a75.state == 1) {
+		    $('#a75_sol').text(a75.value);
+		    $('#a75_sol').show();
+		    $('#a75_ans').hide();
+		} else {
+		    $('#a75_sol').hide();
+		    $('#a75_ans').show();
+		}	
+
+		if (a76.state == 1) {
+		    $('#a76_sol').text(a76.value);
+		    $('#a76_sol').show();
+		    $('#a76_ans').hide();
+		} else {
+		    $('#a76_sol').hide();
+		    $('#a76_ans').show();
+		}
+
+		if (a77.state == 1) {
+		    $('#a77_sol').text(a77.value);
+		    $('#a77_sol').show();
+		    $('#a77_ans').hide();
+		} else {
+		    $('#a77_sol').hide();
+		    $('#a77_ans').show();
+		}
+
+		if (a78.state == 1) {
+		    $('#a78_sol').text(a78.value);
+		    $('#a78_sol').show();
+		    $('#a78_ans').hide();
+		} else {
+		    $('#a78_sol').hide();
+		    $('#a78_ans').show();
+		}
+
+		if (a79.state == 1) {
+		    $('#a79_sol').text(a79.value);
+		    $('#a79_sol').show();
+		    $('#a79_ans').hide();
+		} else {
+		    $('#a79_sol').hide();
+		    $('#a79_ans').show();
+		}
+
+		if (a81.state == 1) {
+		    $('#a81_sol').text(a81.value);
+		    $('#a81_sol').show();
+		    $('#a81_ans').hide();
+		} else {
+		    $('#a81_sol').hide();
+		    $('#a81_ans').show();
+		}
+
+		if (a82.state == 1) {
+		    $('#a82_sol').text(a82.value);
+		    $('#a82_sol').show();
+		    $('#a82_ans').hide();
+		} else {
+		    $('#a82_sol').hide();
+		    $('#a82_ans').show();
+		}
+
+		if (a83.state == 1) {
+		    $('#a83_sol').text(a83.value);
+		    $('#a83_sol').show();
+		    $('#a83_ans').hide();
+		} else {
+		    $('#a83_sol').hide();
+		    $('#a83_ans').show();
+		}
+
+		if (a84.state == 1) {
+		    $('#a84_sol').text(a84.value);
+		    $('#a84_sol').show();
+		    $('#a84_ans').hide();
+		} else {
+		    $('#a84_sol').hide();
+		    $('#a84_ans').show();
+		}	
+
+		if (a85.state == 1) {
+		    $('#a85_sol').text(a85.value);
+		    $('#a85_sol').show();
+		    $('#a85_ans').hide();
+		} else {
+		    $('#a85_sol').hide();
+		    $('#a85_ans').show();
+		}	
+
+		if (a86.state == 1) {
+		    $('#a86_sol').text(a86.value);
+		    $('#a86_sol').show();
+		    $('#a86_ans').hide();
+		} else {
+		    $('#a86_sol').hide();
+		    $('#a86_ans').show();
+		}
+
+		if (a87.state == 1) {
+		    $('#a87_sol').text(a87.value);
+		    $('#a87_sol').show();
+		    $('#a87_ans').hide();
+		} else {
+		    $('#a87_sol').hide();
+		    $('#a87_ans').show();
+		}
+
+		if (a88.state == 1) {
+		    $('#a88_sol').text(a88.value);
+		    $('#a88_sol').show();
+		    $('#a88_ans').hide();
+		} else {
+		    $('#a88_sol').hide();
+		    $('#a88_ans').show();
+		}
+
+		if (a89.state == 1) {
+		    $('#a89_sol').text(a89.value);
+		    $('#a89_sol').show();
+		    $('#a89_ans').hide();
+		} else {
+		    $('#a89_sol').hide();
+		    $('#a89_ans').show();
+		}
+
+		if (a91.state == 1) {
+		    $('#a91_sol').text(a91.value);
+		    $('#a91_sol').show();
+		    $('#a91_ans').hide();
+		} else {
+		    $('#a91_sol').hide();
+		    $('#a91_ans').show();
+		}
+
+		if (a92.state == 1) {
+		    $('#a92_sol').text(a92.value);
+		    $('#a92_sol').show();
+		    $('#a92_ans').hide();
+		} else {
+		    $('#a92_sol').hide();
+		    $('#a92_ans').show();
+		}
+
+		if (a93.state == 1) {
+		    $('#a93_sol').text(a93.value);
+		    $('#a93_sol').show();
+		    $('#a93_ans').hide();
+		} else {
+		    $('#a93_sol').hide();
+		    $('#a93_ans').show();
+		}
+
+		if (a94.state == 1) {
+		    $('#a94_sol').text(a94.value);
+		    $('#a94_sol').show();
+		    $('#a94_ans').hide();
+		} else {
+		    $('#a94_sol').hide();
+		    $('#a94_ans').show();
+		}	
+
+		if (a95.state == 1) {
+		    $('#a95_sol').text(a95.value);
+		    $('#a95_sol').show();
+		    $('#a95_ans').hide();
+		} else {
+		    $('#a95_sol').hide();
+		    $('#a95_ans').show();
+		}	
+
+		if (a96.state == 1) {
+		    $('#a96_sol').text(a96.value);
+		    $('#a96_sol').show();
+		    $('#a96_ans').hide();
+		} else {
+		    $('#a96_sol').hide();
+		    $('#a96_ans').show();
+		}
+
+		if (a97.state == 1) {
+		    $('#a97_sol').text(a97.value);
+		    $('#a97_sol').show();
+		    $('#a97_ans').hide();
+		} else {
+		    $('#a97_sol').hide();
+		    $('#a97_ans').show();
+		}
+
+		if (a98.state == 1) {
+		    $('#a98_sol').text(a98.value);
+		    $('#a98_sol').show();
+		    $('#a98_ans').hide();
+		} else {
+		    $('#a98_sol').hide();
+		    $('#a98_ans').show();
+		}
+
+		if (a99.state == 1) {
+		    $('#a99_sol').text(a99.value);
+		    $('#a99_sol').show();
+		    $('#a99_ans').hide();
+		} else {
+		    $('#a99_sol').hide();
+		    $('#a99_ans').show();
+		}
+
+	    }    
+
+
+            function clearDis() {
+		$("#chatList :input").attr('disabled', '');
+            }
+
+            function send_qst() {
+                if (id == 0) {
+                    socket.emit('test', {level: $('#level').val()});
+		    console.log('new game requested');
+                }
+            }   
+
+            function get_sol() {
+                if (id == 0) {
+                    socket.emit('solve');
+		    console.log('solution requested');
+                }
+            }               
+
+            function refresh() {
+                socket.emit('left', {id: id});
+            }
+
+            function leave_room() {
+                socket.emit('left', {id: id}, function() {
+		    id = -1;
+                    socket.disconnect();
+
+                    // go back to the login page
+                    window.location.href = "{{ url_for('main.index') }}";
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Flask-SocketIO-Game: {{ room }}</h1>
+        <table id="chatList" style="width:90%; border: 1px solid black; border-collapse: collapse">
+          <tbody>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a11_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a11_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a12_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a12_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a13_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a13_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a14_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a14_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a15_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a15_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a16_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a16_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a17_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a17_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a18_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a18_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a19_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a19_ans"></td>                        
+            </tr>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a21_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a21_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a22_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a22_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a23_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a23_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a24_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a24_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a25_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a25_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a26_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a26_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a27_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a27_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a28_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a28_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a29_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a29_ans"></td>                       
+            </tr>
+            <tr style="border-bottom: 1px solid black; border-collapse: collapse">            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a31_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a31_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a32_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a32_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a33_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a33_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a34_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a34_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a35_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a35_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a36_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a36_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a37_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a37_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a38_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a38_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a39_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a39_ans"></td>        
+            </tr>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a41_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a41_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a42_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a42_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a43_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a43_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a44_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a44_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a45_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a45_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a46_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a46_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a47_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a47_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a48_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a48_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a49_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a49_ans"></td> 
+            </tr>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a51_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a51_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a52_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a52_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a53_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a53_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a54_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a54_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a55_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a55_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a56_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a56_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a57_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a57_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a58_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a58_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a59_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a59_ans"></td>
+            </tr>
+            <tr style="border-bottom: 1px solid black; border-collapse: collapse">            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a61_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a61_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a62_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a62_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a63_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a63_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a64_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a64_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a65_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a65_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a66_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a66_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a67_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a67_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a68_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a68_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a69_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a69_ans"></td>
+            </tr>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a71_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a71_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a72_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a72_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a73_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a73_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a74_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a74_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a75_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a75_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a76_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a76_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a77_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a77_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a78_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a78_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a79_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a79_ans"></td>           
+            </tr>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a81_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a81_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a82_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a82_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a83_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a83_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a84_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a84_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a85_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a85_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a86_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a86_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a87_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a87_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a88_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a88_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a89_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a89_ans"></td>              
+            </tr>
+            <tr>            
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a91_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a91_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a92_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a92_ans"></td>
+              <td style=" width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a93_sol"></td><td style="border-right: 1px solid black; border-collapse: collapse; width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a93_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a94_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a94_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a95_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a95_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a96_sol"></td><td style="width:5%; height: 100%; border-right: 1px solid black; border-collapse: collapse"> <input style="width:100%; height: 100%" id="a96_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a97_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a97_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a98_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a98_ans"></td>
+              <td style="width:5%; height: 100%; text-align: right"> <output style="width:100%; height: 100%" id="a99_sol"></td><td style="width:5%; height: 100%"> <input style="width:100%; height: 100%" id="a99_ans"></td>      
+            </tr>
+          </tbody>
+        </table>
+        
+        <div>Your id number: <a id="yourId"></a></div>
+	<div>Your score: <a id="yourScore"></a></div>
+	<div><button id="button" onclick="get_sol();">Solve</button></div>
+        <div><input id="level">Game level (from 1 to 9)</div>
+	<div><button id="button2" onclick="send_qst();">New game</button></div>
+        <a href="#" onclick="leave_room();">Leave this room</a>
+        <div id="Messages"></div>
+    </body>
+</html>
